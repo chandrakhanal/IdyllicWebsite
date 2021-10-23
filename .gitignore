@@ -338,3 +338,16 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Project Folders
+**/images
+**/Component/images
+**/Component/fontawesome
+App_Data/
+writereaddata/
+WebConfigs/
+
+# Project Files
+*.orig
+*.bak
+*.svg
