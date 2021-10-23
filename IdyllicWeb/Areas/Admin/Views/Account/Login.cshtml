@@ -1,0 +1,88 @@
+﻿@using IdyllicWeb.Areas.Admin.View_Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "National Defence College";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAuth.cshtml";
+}
+<style>
+    .modal-header{
+        text-align:center !important;
+    }
+</style>
+<div class="modal-dialog w-100 mx-auto">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+     
+        @Html.AntiForgeryToken()
+        <div class="modal-content">
+            <div class="modal-header bg-white" style="text-align:center !important">
+                <a href="/" class="modal-title w-100" title="Go to homepage">
+                    <img src="~/images/NDC-Logo.png" height="80" />
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="modal-title w-100 mb-4">Sign-In</h3>
+                @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                {
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        @Html.ValidationSummary(true, "")
+                        <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="position-relative input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                            </div>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @Placeholder = "Username", @arialabel = "Username", @ariadescribedby = "basic-addon1", autocomplete = "off", autocorrect = "off", value = "" })
+                            @*<input type="text" name="UserName" class="form-control" placeholder="Username"  autocomplete="off" autocorrect="off" value="">*@
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(m => m.hdns)
+                        </div>
+                        <div class="position-relative input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-key"></i></span>
+                            </div>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter Password", autocomplete = "off", autocorrect = "off", value = "" })
+                            @*<input type="password" name="Password" class="form-control" placeholder="Enter Password" aria-label="Password" autocomplete="off" autocorrect="off" value="" aria-describedby="basic-addon2">*@
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(m => m.hdks)
+                        </div>
+                    </div>
+                    @*<div class="col-md-12 alert alert-dark" role="alert">
+                        <div class="position-relative form-group">
+                            @Html.Partial("_Captcha")
+                        </div>
+                    </div>*@
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block btn-lg" style="font-size: 1.5em;" type="submit" onclick="Validatepage();">Sign in</button>
+                        </div>
+                    </div>
+                </div>
+                @*
+                    <div class="position-relative form-check">
+                       <label for="RememberMe">Remember me</label>@Html.CheckBoxFor(m => m.RememberMe)
+                    </div>
+                *@
+
+            </div>
+            <div class="modal-footer clearfix bg-white">
+                <div class="">
+                    <a href="/" class="btn-lg btn btn-link"><i class="fa fa-home"></i></a>
+                    @*<a href="@Url.Action("ForgotPassword","Account")" class="btn-lg btn btn-link">Forgot Password</a>*@
+                </div>
+                @*<div class="float-right">
+                    <a href="/registration/register" class="btn btn-outline-primary">CLICK HERE FOR NEW REGISTRATION</a>
+                </div>*@
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

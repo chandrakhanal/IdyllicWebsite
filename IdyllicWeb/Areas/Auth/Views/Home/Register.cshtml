@@ -1,0 +1,71 @@
+﻿@model techbWeb.Areas.Admin.View_Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register with Us";
+    Layout = "~/Areas/Auth/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center form_container">
+
+    @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                @Html.ValidationSummary(true, "")
+                <button type="button" class="close" aria-label="Close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <h4 class="text-center text-white">@ViewBag.Title</h4>
+        <div class="input-group mb-3 mt-5">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-pencil"></i></span>
+            </div>
+            @Html.EditorFor(m => m.FName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Full Name" } })
+            @Html.ValidationMessageFor(m => m.FName, "", new { @class = "error" })
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            </div>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "E-mail" })
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-key"></i></span>
+            </div>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Enter Password" })
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-append">
+                <span class="input-group-text" style="background:#ff0000 !important"><i class="fa fa-key"></i></span>
+            </div>
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
+            @Html.HiddenFor(m => m.UserName)
+            <input type="hidden" id="Role" name="Role" value="@ViewBag.Role">
+        </div>
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customControlInline">
+                <label class="custom-control-label" for="customControlInline">I read and accept <a href="#">Terms &amp; Conditions.</a></label>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <input type="submit" value="Register" class="btn btn-primary btn-block" />  <!--onclick="Validatepage();"-->
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+    $("#Email").bind('input', function () {
+        var stt = $(this).val();
+        $("#UserName").val(stt);
+    });
+    function Validatepage() {
+        alert($("#UserName").val());
+    }
+    </script>
+}

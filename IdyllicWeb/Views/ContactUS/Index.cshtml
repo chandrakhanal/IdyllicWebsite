@@ -1,0 +1,59 @@
+﻿@model IEnumerable<IdyllicWeb.View_Models.ContactUSIndexVM>
+
+@{
+    ViewBag.Title = "Contact US List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container mt-4">
+
+    <table class="table w-10" id="myTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email Id</th>
+                <th>Mobile No</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MobileNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" href="@Url.Action("Edit", new { id = item.ContactId })"><i class="fa fa-pencil"></i></a>|
+                        <button type="button" class="btn btn-transparent red btn-xs" onclick="Delete(@item.ContactId, this)"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        LoadJDTSorted('#myTable');
+
+        function Delete(id, event) {
+                var TableId = "#myTable";
+                var Jsonurl = '@Url.Action("DeleteOnConfirm")';
+                DeleteJDTRow(id, event, TableId, Jsonurl)
+            }
+    </script>
+}
